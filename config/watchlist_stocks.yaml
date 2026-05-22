@@ -1,0 +1,23 @@
+# US Stock watchlist — user-managed, all symbols must be <= $50/share
+# Edit freely: add/remove symbols, run bot after saving.
+symbols:
+  - SOFI
+  - PLTR
+  - RIVN
+  - SNAP
+  - AAL
+  - CCL
+  - NCLH
+  - HOOD
+  - MARA
+  - RIOT
+  - NIO
+  - XPEV
+  - LCID
+  - JOBY
+  - OPEN
+  - AI
+  - SOUN
+  - BBAI
+  - INTC
+  - F

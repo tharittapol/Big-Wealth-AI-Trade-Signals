@@ -1,0 +1,6 @@
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple/
+Collecting json-repair
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/ee/87/49b20c6b81493d55c311f711ed87319d0fbad8bd0bbfbe36e52103af36bd/json_repair-0.59.10-py3-none-any.whl (47 kB)
+     -------------------------------------- 47.7/47.7 kB 797.9 kB/s eta 0:00:00
+Installing collected packages: json-repair
+Successfully installed json-repair-0.59.10

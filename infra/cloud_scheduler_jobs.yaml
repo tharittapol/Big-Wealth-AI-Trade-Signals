@@ -1,0 +1,49 @@
+# Cloud Scheduler job definitions for Big-wealth
+#
+# Prerequisites:
+#   - Cloud Run Jobs already created (scanner-us-stocks, scanner-crypto, paper-trade-updater)
+#   - Service account with roles/run.invoker permission
+#
+# Deploy with:
+#   export PROJECT_ID=<your-gcp-project>
+#   export REGION=asia-southeast1
+#   export SA_EMAIL=big-wealth-scheduler@${PROJECT_ID}.iam.gserviceaccount.com
+#   ./infra/create_scheduler_jobs.sh
+
+jobs:
+  - name: scanner-us-stocks
+    description: "Pre-market US stocks scan — runs 30 min before NYSE open"
+    schedule: "0 13 * * 1-5"     # 13:00 UTC = 20:00 UTC+7, Mon–Fri
+    timezone: UTC
+    cloud_run_job:
+      job: scanner-us-stocks
+      region: asia-southeast1
+      args:
+        - "--mode"
+        - "scan"
+        - "--market"
+        - "us"
+
+  - name: scanner-crypto
+    description: "Crypto scan — daily at 20:00 UTC+7 (same time as US scan)"
+    schedule: "0 13 * * *"       # 13:00 UTC = 20:00 UTC+7, every day (crypto is 24/7)
+    timezone: UTC
+    cloud_run_job:
+      job: scanner-crypto
+      region: asia-southeast1
+      args:
+        - "--mode"
+        - "scan"
+        - "--market"
+        - "crypto"
+
+  - name: paper-trade-updater
+    description: "Morning paper position mark-to-market update"
+    schedule: "0 1 * * *"        # 01:00 UTC = 08:00 UTC+7, every day
+    timezone: UTC
+    cloud_run_job:
+      job: paper-trade-updater
+      region: asia-southeast1
+      args:
+        - "--mode"
+        - "update-paper"

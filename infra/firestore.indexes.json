@@ -1,0 +1,13 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "paper_trades",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "close_date", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

@@ -1,0 +1,52 @@
+agent:
+  top_picks_count: 3           # Signals returned per market per day (US and crypto each)
+  us_stock_max_price: 200.0     # Price cap per share — Dime broker requires min 1 share per sell
+  swing_days_min: 1            # Min expected holding period in days
+  swing_days_max: 5            # Max expected holding period (swing trade style)
+  crypto_prescan_min_score: 2  # Pre-filter: only pass crypto candidates with score ≥ this to analyzer
+
+signal:
+  threshold: 3                 # Min indicators that must fire for a "strong" signal (score_signal)
+
+indicators:
+  rsi:
+    period: 14                 # RSI lookback window (standard Wilder 14-period)
+    oversold: 40               # RSI below this = oversold → potential buy signal (relaxed from 30)
+    overbought: 60             # RSI above this = overbought → potential sell signal
+  macd:
+    fast: 12                   # Fast EMA period
+    slow: 26                   # Slow EMA period
+    signal: 9                  # MACD signal line smoothing period
+  bollinger_bands:
+    period: 20                 # BB middle band period (20-day SMA)
+    std: 2.0                   # Band width = ±2 standard deviations
+    touch_tolerance: 0.01      # Price within 1% above lower band still counts as "touching" lower band
+  ema:
+    fast: 9                    # Fast EMA — EMA9 cross above EMA21 = bullish crossover signal
+    slow: 21                   # Slow EMA
+  sma:
+    medium: 50                 # 50-day SMA — medium-term trend direction
+    long: 200                  # 200-day SMA — golden cross (50>200) or death cross (50<200)
+
+data:
+  us_stocks:
+    period: "60d"              # yfinance history window for OHLCV fetch
+    interval: "1d"             # Daily bars
+    min_rows: 30               # Reject symbol if fewer than 30 bars (not enough for indicators)
+    news_max_items: 5          # Max yfinance news headlines per symbol (fallback only)
+  crypto:
+    timeframe: "1d"            # CCXT timeframe string — daily bars
+    limit: 60                  # Number of bars to fetch from Binance
+    min_rows: 30               # Reject pair if fewer than 30 bars available
+    top_volume_limit: 50       # Binance top-N pairs by 24h volume (used as fallback if discovery fails)
+    use_dynamic_fetch: false   # Kept for legacy fallback; discovery now uses Claude web search
+
+paper_trading:
+  initial_balance_usd: 5000.0  # Starting virtual balance in USD
+  max_position_size_pct: 0.10  # Max 10% of balance allocated per single position
+
+schedule:
+  # Note: these are UTC+7 reference times; actual Cloud Scheduler uses UTC (see infra/)
+  us_scan_cron: "0 20 * * 1-5"   # 20:00 UTC+7 = 13:00 UTC = 9:00 AM ET, Mon–Fri (before NYSE open)
+  crypto_scan_cron: "0 20 * * *"  # 20:00 UTC+7 = 13:00 UTC, daily (crypto markets are 24/7)
+  paper_update_cron: "0 8 * * *"  # 08:00 UTC+7 = 01:00 UTC, daily morning mark-to-market

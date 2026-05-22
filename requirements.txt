@@ -1,0 +1,24 @@
+# Core
+pyyaml>=6.0.0
+yfinance>=0.2.40
+ccxt>=4.3.0
+ta>=0.11.0
+pandas>=2.2.0
+numpy>=1.26.0
+pydantic>=2.7.0
+python-dotenv>=1.0.0
+structlog>=24.0.0
+httpx>=0.27.0
+json-repair>=0.30.0
+
+# Notifications
+python-telegram-bot>=21.0
+
+# Cloud (GCP)
+google-cloud-firestore>=2.16.0
+google-cloud-secret-manager>=2.20.0
+
+# Dev / Test
+pytest>=8.0.0
+pytest-mock>=3.12.0
+pytest-asyncio>=0.23.0

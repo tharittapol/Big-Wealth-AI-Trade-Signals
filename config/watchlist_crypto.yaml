@@ -1,0 +1,22 @@
+# Crypto watchlist — top pairs by volume on Binance
+symbols:
+  - BTC/USDT
+  - ETH/USDT
+  - BNB/USDT
+  - SOL/USDT
+  - XRP/USDT
+  - ADA/USDT
+  - AVAX/USDT
+  - DOT/USDT
+  - MATIC/USDT
+  - LINK/USDT
+  - LTC/USDT
+  - UNI/USDT
+  - ATOM/USDT
+  - ETC/USDT
+  - BCH/USDT
+  - NEAR/USDT
+  - APT/USDT
+  - ARB/USDT
+  - OP/USDT
+  - FIL/USDT
